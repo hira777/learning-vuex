@@ -1,0 +1,42 @@
+{
+  "name": "learning-vuex",
+  "version": "1.0.0",
+  "author": "soarflat",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run server",
+    "server": "browser-sync start --server 'docs'",
+    "build:html": "pug src/pug/views -o docs -P",
+    "build:css": "node-sass --output-style compressed -o docs/css src/scss",
+    "build:js": "webpack",
+    "build": "npm-run-all build:*",
+    "watch:html": "pug src/pug/views -o docs -P -w",
+    "watch:css": "npm run build:css -- --watch",
+    "watch:js": "webpack --watch",
+    "watch": "npm-run-all --parallel watch:*",
+    "minify": "NODE_ENV=production npm run webpack -- --optimize-minimize",
+    "webpack": "webpack --colors --display-error-details --progress"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "browser-sync": "^2.18.13",
+    "css-loader": "^0.28.7",
+    "node-sass": "^4.6.1",
+    "npm-run-all": "^4.1.2",
+    "pug": "^2.0.0-rc.4",
+    "pug-cli": "^1.0.0-alpha6",
+    "pug-loader": "^2.3.0",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.3",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "reset-css": "^2.2.1",
+    "vue": "^2.5.3",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  }
+}
