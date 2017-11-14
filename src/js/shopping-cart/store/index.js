@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import * as types from './mutation-types'
+import * as types from './mutation-types';
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -26,7 +28,7 @@ export default new Vuex.Store({
     ],
   },
 
-  strict: debug,
+  strict: process.env.NODE_ENV !== 'production',
 
   getters: {
     allProducts: state => state.all,
@@ -57,9 +59,9 @@ export default new Vuex.Store({
       const record = state.added.find(p => p.id === id);
 
       if (!record) {
-        state.added.pusu({
+        state.added.push({
           id,
-          quantitty: 1,
+          quantity: 1,
         });
       } else {
         record.quantity += 1;

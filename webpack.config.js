@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     '/getting-started/app': './src/js/getting-started/app',
+    '/shopping-cart/app': './src/js/shopping-cart/app',
   },
 
   output: {
@@ -17,7 +18,7 @@ module.exports = {
       loader: 'vue-loader',
       options: {
         loaders: {
-          js: 'babel-loader?presets[]=env'
+          js: 'babel-loader'
         }
       }
     }, {
@@ -25,9 +26,6 @@ module.exports = {
       exclude: /node_modules/,
       use: [{
         loader: 'babel-loader',
-        query: {
-          presets: ['env'],
-        },
       }],
     }],
   },
