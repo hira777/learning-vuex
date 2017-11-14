@@ -4297,6 +4297,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _mutations;
+
 var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
@@ -4365,18 +4367,8 @@ exports.default = new _vuex2.default.Store({
     }
   },
 
-  actions: {
-    addToCart: function addToCart(_ref2, product) {
-      var commit = _ref2.commit;
-
-      commit(types.ADD_TO_CART, {
-        id: product.id
-      });
-    }
-  },
-
-  mutations: _defineProperty({}, types.ADD_TO_CART, function (state, _ref3) {
-    var id = _ref3.id;
+  mutations: (_mutations = {}, _defineProperty(_mutations, types.ADD_TO_CART, function (state, _ref2) {
+    var id = _ref2.id;
 
     var record = state.added.find(function (p) {
       return p.id === id;
@@ -4390,7 +4382,24 @@ exports.default = new _vuex2.default.Store({
     } else {
       record.quantity += 1;
     }
-  })
+  }), _defineProperty(_mutations, types.REMOVE_ALL, function (state) {
+    state.added = [];
+  }), _mutations),
+
+  actions: {
+    addToCart: function addToCart(_ref3, product) {
+      var commit = _ref3.commit;
+
+      commit(types.ADD_TO_CART, {
+        id: product.id
+      });
+    },
+    removeAll: function removeAll(_ref4) {
+      var commit = _ref4.commit;
+
+      commit(types.REMOVE_ALL);
+    }
+  }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -4405,6 +4414,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var ADD_TO_CART = exports.ADD_TO_CART = 'ADD_TO_CART';
+var REMOVE_ALL = exports.REMOVE_ALL = 'REMOVE_ALL';
 
 /***/ }),
 /* 12 */
@@ -4947,8 +4957,11 @@ exports.default = {
         return accum + item.quantity;
       }, 0);
     }
-  }
+  },
+
+  methods: (0, _vuex.mapActions)(['removeAll'])
 }; //
+//
 //
 //
 //
@@ -5021,37 +5034,39 @@ var render = function() {
             [_vm._v("Shop")]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "nav-item is-tab",
-              class: { "active-bottom-border": _vm.$route.path === "/cart" }
-            },
-            [
-              _c("div", { staticClass: "field is-grouped" }, [
-                _c(
-                  "p",
-                  { staticClass: "control" },
-                  [
-                    _c(
-                      "router-link",
-                      { staticClass: "button is-info", attrs: { to: "/cart" } },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-shopping-cart" })
-                        ]),
-                        _vm._v(" "),
-                        _c("span", [
-                          _vm._v("Checkout (" + _vm._s(_vm.itemsInCart) + ")")
-                        ])
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
+          _c("div", { staticClass: "nav-item is-tab" }, [
+            _c("div", { staticClass: "field is-grouped" }, [
+              _c(
+                "p",
+                { staticClass: "control" },
+                [
+                  _c(
+                    "router-link",
+                    { staticClass: "button is-info", attrs: { to: "/cart" } },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-shopping-cart" })
+                      ]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v("Checkout (" + _vm._s(_vm.itemsInCart) + ")")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger",
+                      on: { click: _vm.removeAll }
+                    },
+                    [_vm._v("Remove All")]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
         ],
         1
       )

@@ -46,14 +46,6 @@ export default new Vuex.Store({
     },
   },
 
-  actions: {
-    addToCart({ commit }, product) {
-      commit(types.ADD_TO_CART, {
-        id: product.id,
-      });
-    },
-  },
-
   mutations: {
     [types.ADD_TO_CART](state, { id }) {
       const record = state.added.find(p => p.id === id);
@@ -67,5 +59,19 @@ export default new Vuex.Store({
         record.quantity += 1;
       }
     },
-  }
+    [types.REMOVE_ALL](state) {
+      state.added = [];
+    },
+  },
+
+  actions: {
+    addToCart({ commit }, product) {
+      commit(types.ADD_TO_CART, {
+        id: product.id,
+      });
+    },
+    removeAll({ commit }) {
+      commit(types.REMOVE_ALL);
+    },
+  },
 });

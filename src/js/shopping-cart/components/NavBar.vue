@@ -12,7 +12,7 @@
 
     <div class="nav-right nav-menu">
       <router-link to="/" class="nav-item is-tab" exact-active-class="is-active">Shop</router-link>
-      <div class="nav-item is-tab" :class="{ 'active-bottom-border': $route.path === '/cart' }">
+      <div class="nav-item is-tab">
         <div class="field is-grouped">
           <p class="control">
             <router-link to="/cart" class="button is-info">
@@ -21,6 +21,7 @@
 	            </span>
               <span>Checkout ({{ itemsInCart }})</span>
             </router-link>
+            <button @click="removeAll" class="button is-danger">Remove All</button>
           </p>
         </div>
       </div>
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     computed: {
@@ -37,7 +38,9 @@
         let cart = this.$store.getters.cartProducts;
         return cart.reduce((accum, item) => accum + item.quantity, 0);
       }
-    }
+    },
+
+    methods: mapActions(['removeAll']),
   }
 </script>
 
