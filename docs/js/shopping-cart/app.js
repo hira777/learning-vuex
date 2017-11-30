@@ -4342,6 +4342,8 @@ exports.default = new _vuex2.default.Store({
 
   strict: process.env.NODE_ENV !== 'production',
 
+  // Vuexを利用するとストア内にゲッター（どのコンポーネント利用可能な算出プロパティ）を定義できる
+  // ゲッターは第1引数としてstateを受け取る
   getters: {
     allProducts: function allProducts(state) {
       return state.all;
@@ -4367,6 +4369,14 @@ exports.default = new _vuex2.default.Store({
     }
   },
 
+  // ミューテーションを状態を変更するための概念
+  // ミューテーションをコミットすることで状態を変更できる
+  // 今回はミューテーション・タイプに
+  // ADD_TO_CARTとREMOVE_ALLの定数を利用している
+  // 定数を設定することによって、共同で作業する人に、アプリケーション全体で
+  // 何のミューテーションが可能であるかを一目見ただけで理解できるようにする
+  // ミューテーションは同期的でなければならないため非同期をしたいのであれば
+  // アクションを利用する
   mutations: (_mutations = {}, _defineProperty(_mutations, types.ADD_TO_CART, function (state, _ref2) {
     var id = _ref2.id;
 
@@ -4386,6 +4396,9 @@ exports.default = new _vuex2.default.Store({
     state.added = [];
   }), _mutations),
 
+  // アクションは、状態を変更するのではなく、ミューテーションをコミットするもの
+  // そのためミューテーションが存在しなければ、状態は変更できない
+  // それぞれのアクションはADD_TO_CARTとREMOVE_ALLのミューテションをコミットする
   actions: {
     addToCart: function addToCart(_ref3, product) {
       var commit = _ref3.commit;
@@ -5193,11 +5206,21 @@ var _vuex = __webpack_require__(3);
 exports.default = {
   name: 'app',
 
+  // mapGettersを利用して
+  // ストアのゲッターをローカルの算出プロパティにマッピングする
+  // 今回はゲッターを異なる名前でローカルにマッピングしている
+  // これで
+  // store.getters.allProductsをthis.products
+  // store.getters.getNumberOfProductsをthis.lengthｓとして利用できる
   computed: (0, _vuex.mapGetters)({
     products: 'allProducts',
     length: 'getNumberOfProducts'
   }),
 
+  // mapActionsを利用して
+  // ストアのアクションをローカルのメソッドにマッピングする
+  // this.addToCartをthis.$store.dispatch(['addToCart'])として利用できる
+  // this.addToCartを実行すれば、ミューテーションがコミットされる
   methods: (0, _vuex.mapActions)(['addToCart'])
 }; //
 //

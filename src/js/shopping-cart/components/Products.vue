@@ -32,11 +32,21 @@
   export default {
     name: 'app',
 
+    // mapGettersを利用して
+    // ストアのゲッターをローカルの算出プロパティにマッピングする
+    // 今回はゲッターを異なる名前でローカルにマッピングしている
+    // これで
+    // store.getters.allProductsをthis.products
+    // store.getters.getNumberOfProductsをthis.lengthｓとして利用できる
     computed: mapGetters({
       products: 'allProducts',
       length: 'getNumberOfProducts'
     }),
 
+    // mapActionsを利用して
+    // ストアのアクションをローカルのメソッドにマッピングする
+    // this.addToCartをthis.$store.dispatch(['addToCart'])として利用できる
+    // this.addToCartを実行すれば、ミューテーションがコミットされる
     methods: mapActions(['addToCart']),
   }
 </script>

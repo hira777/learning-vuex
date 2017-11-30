@@ -30,6 +30,8 @@ export default new Vuex.Store({
 
   strict: process.env.NODE_ENV !== 'production',
 
+  // Vuexを利用するとストア内にゲッター（どのコンポーネント利用可能な算出プロパティ）を定義できる
+  // ゲッターは第1引数としてstateを受け取る
   getters: {
     allProducts: state => state.all,
     getNumberOfProducts: state => (state.all) ? state.all.length : 0,
@@ -46,6 +48,14 @@ export default new Vuex.Store({
     },
   },
 
+  // ミューテーションを状態を変更するための概念
+  // ミューテーションをコミットすることで状態を変更できる
+  // 今回はミューテーション・タイプに
+  // ADD_TO_CARTとREMOVE_ALLの定数を利用している
+  // 定数を設定することによって、共同で作業する人に、アプリケーション全体で
+  // 何のミューテーションが可能であるかを一目見ただけで理解できるようにする
+  // ミューテーションは同期的でなければならないため非同期をしたいのであれば
+  // アクションを利用する
   mutations: {
     [types.ADD_TO_CART](state, { id }) {
       const record = state.added.find(p => p.id === id);
@@ -64,6 +74,9 @@ export default new Vuex.Store({
     },
   },
 
+  // アクションは、状態を変更するのではなく、ミューテーションをコミットするもの
+  // そのためミューテーションが存在しなければ、状態は変更できない
+  // それぞれのアクションはADD_TO_CARTとREMOVE_ALLのミューテションをコミットする
   actions: {
     addToCart({ commit }, product) {
       commit(types.ADD_TO_CART, {
