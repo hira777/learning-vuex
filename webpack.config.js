@@ -2,13 +2,12 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    '/getting-started/app': './src/js/getting-started/app',
     '/shopping-cart/app': './src/js/shopping-cart/app',
   },
 
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'docs/js'),
+    path: path.join(__dirname, 'docs'),
   },
 
   module: {
